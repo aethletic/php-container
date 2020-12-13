@@ -2,6 +2,11 @@
 
 Simple Dependency Injection Container.
 
+## Installation
+```bash
+composer require aethletic/php-container
+```
+
 ## Example
 ```php
 use Container\Container;
