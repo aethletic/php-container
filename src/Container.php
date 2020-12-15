@@ -7,22 +7,10 @@ class Container
     private static $instances = [];
 
     private static $methods = [];
+    
     private static $container = [];
-
-    public function __construct()
-    {
-    }
-
-    protected function __clone()
-    {
-    }
-
-    public function __wakeup()
-    {
-        throw new \Exception("Cannot unserialize a singleton.");
-    }
-
-    public static function getInstance(): Container
+   
+    public static function getInstance() : Container
     {
         $cls = static::class;
         if (!isset(self::$instances[$cls])) {
@@ -50,24 +38,24 @@ class Container
         return $default;
     }
 
-    public static function has($name): bool
+    public static function has($name) : bool
     {
         return array_key_exists($name, self::$container);
     }
 
-    public static function remove($name): void
+    public static function remove($name) : void
     {
         if (self::has($name)) {
             unset(self::$container[$name]);
         }
     }
 
-    public static function clear(): void
+    public static function clear() : void
     {
         self::$container = [];
     }
 
-    public static function map(string $method, $func): void
+    public static function map(string $method, $func) : void
     {
         if (self::methodExists($method)) {
             throw new \Exception("Cannot override an existing `{$method}` method.");
@@ -76,7 +64,7 @@ class Container
         self::$methods[$method] = $func;
     }
 
-    public static function mapOnce(string $method, $func): void
+    public static function mapOnce(string $method, $func) : void
     {
         if (self::methodExists($method)) {
             throw new \Exception("Cannot override an existing `{$method}` method.");
@@ -85,7 +73,7 @@ class Container
         self::$methods[$method] = is_callable($func) ? call_user_func($func) : $func;
     }
 
-    private static function methodExists($method) 
+    private static function methodExists($method) : bool
     {
         return method_exists(self::class, $method) || array_key_exists($method, self::$methods) ? true : false;
     }
@@ -120,5 +108,18 @@ class Container
     public function __unset($name)
     {
         self::remove($name);
+    }
+    
+     public function __construct()
+    {
+    }
+
+    protected function __clone()
+    {
+    }
+
+    public function __wakeup()
+    {
+        throw new \Exception("Cannot unserialize a singleton.");
     }
 }
