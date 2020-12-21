@@ -46,7 +46,7 @@ sleep(3);
 echo $app->timestamp() . PHP_EOL; // 1607881889
 ```
 
-### Use cases
+## Use cases
 
 ```php
 use Container\Container as App;
