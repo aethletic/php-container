@@ -58,7 +58,7 @@ $app->mapOnce('db', function () use ($app) {
     $capsule = new Capsule;
     $capsule->addConnection(require __DIR__ . '/config/database.php');
     $capsule->setAsGlobal();
-    $capsule->bootEloquent();
+    return $capsule;
 });
 
 // use
